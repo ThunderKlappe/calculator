@@ -1,0 +1,83 @@
+body{
+    box-sizing: border-box;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #A3423C;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#header{
+    height: 72px;
+    background-color: #781D42;
+    color: #F0D290;
+    font-size: 32px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    padding-left: 60px;
+    margin-bottom: 30px;
+}
+#content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#outer-calc{
+    background-color: #DE834D;
+    border-radius: 30px;
+    padding: 25px;
+}
+#calc-display{
+    height: 50px;
+    background-color: #F0D290;
+    border-radius: 15px;
+}
+#button-container{
+    display: flex;
+    max-width: 300px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+button{
+    border-style: none;
+    border-radius: 15px;
+    height: 60px;
+    width: 60px;
+    margin: 5px;
+    font-size: 26px;
+    flex-grow: 1;
+}
+sup{
+    font-size: 15px;
+}
+.special-button{
+    background-color: #781D42;
+    color: #F0D290;
+}
+.special-button:active{
+    background-color: #F0D290;
+    color:#781D42
+}
+
+.operator-button{
+    background-color: #b35f80;
+    color: #2C3531
+}
+.operator-button:active{
+    background-color: #2C3531;
+    color: #b35f80;
+}
+
+.number-button{
+    background-color: #F0D290;
+    color: #2C3531;
+}
+.number-button:active{
+    background-color: #2C3531;
+    color: #F0D290;
+}
+
+#equals{
+    flex-grow: 18;
+}
