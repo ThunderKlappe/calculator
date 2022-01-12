@@ -1,5 +1,6 @@
 //set constants
 const MAX_DISPLAY_LENGTH = 12;
+const MAX_EXPONENTIAL_LENGTH = 6;
 
 //Get buttons and display area
 const display = document.querySelector("#calc-display");
@@ -7,6 +8,7 @@ const numberButtons = document.querySelectorAll(".number-button");
 const clearButton = document.querySelector("#clear");
 const backButton = document.querySelector("#back");
 const equalsButton = document.querySelector('#equals');
+const negativeButton = document.querySelector("#negative");
 const operatorButtons = document.querySelectorAll('.operator-button')
 
 //global variables
@@ -21,6 +23,7 @@ backButton.addEventListener("click", backspace);
 clearButton.addEventListener('click', clearAll);
 operatorButtons.forEach(button => button.addEventListener("click", processOperator));
 equalsButton.addEventListener("click", equals);
+negativeButton.addEventListener("click", negative);
 
 
 //*****FUNCTIONS*****
@@ -38,12 +41,10 @@ function addToDisplay(e){
         //reactivates the decimal event listener
         numberButtons[10].addEventListener("click", addToDisplay);
     }if(display.textContent.length <= 12){
-        
-        let number = e.currentTarget.textContent;
-        display.innerHTML += number;
+        display.innerHTML += e.currentTarget.textContent;
         //if the decimal point was pressed remove the event listener
-        if(e.currentTarget.id == "decimal"){
-            e.currentTarget.removeEventListener("click", addToDisplay);
+        if(e.currentTarget.textContent == "."){
+            numberButtons[10].removeEventListener("click", addToDisplay);
         }
     }
 }
@@ -91,6 +92,8 @@ function processOperator(e){
         e.currentTarget.classList.add("active");
         
     }
+    //reactivates the decimal event listener
+    numberButtons[10].addEventListener("click", addToDisplay);
     
 }
 
@@ -108,6 +111,7 @@ function operate(op1, op2, oper){
     }else if(oper == "power"){
         return op1 ** op2
     }else{
+        //if it wasn't an operator, just put back the original number
         return op2;
     }
 }
@@ -121,14 +125,23 @@ function equals(e){
         //save the result in operand1
         operand1 = operate(operand1, operand2, operator);
         //put the result into the display
-        if( ("" + operand1).length > MAX_DISPLAY_LENGTH){
-            display.textContent = operand1.toPrecision(6);
-        }else if(operand2 == 0 && operator == "divide"){
+
+        //if it's in exponential notation, only fill the display
+        if( ("" + operand1).length > MAX_DISPLAY_LENGTH && ("" + operand1).includes("e")){
+            display.textContent = operand1.toPrecision(MAX_EXPONENTIAL_LENGTH);
+        }
+        //if it's a long deciaml, only fill the display
+        else if(("" + operand1).length > MAX_DISPLAY_LENGTH){
+            display.textContent = (""+operand1.toPrecision(MAX_DISPLAY_LENGTH)).slice(0,MAX_DISPLAY_LENGTH);
+        }//if it's dividing by 0, give error
+        else if(operand2 == 0 && operator == "divide"){
             display.textContent = "Can't do that!"   
         }
-        else if(operand1 == "Infinity"){
-            display.textContent = "Way too big!"
+        //if it's an overflow, give error
+        else if((""+operand1).includes("Infinity")){
+            display.textContent = "Out of Bounds"
         }
+        //if it's ok, give number.
         else{
             display.textContent = operand1;
         }
@@ -140,4 +153,15 @@ function equals(e){
     //mark that the calculator is ready for a new operator
     newOp = true;
     operatorButtons.forEach(button => button.classList.remove("active"));
+    
+}
+
+//this function switches if the number in the display is positive or negative
+function negative(){
+    if(display.textContent.slice(0,1) == '-'){
+        display.textContent = display.textContent.slice(1, display.textContent.length);
+    }else{
+        display.textContent = `-${display.textContent}`;
+    }
+    newOp = false;
 }
