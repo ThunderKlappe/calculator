@@ -10,17 +10,28 @@ const multiplyButton = document.querySelector('#multiply');
 const divideButton = document.querySelector('#divide');
 const equalsButton = document.querySelector('#equals');
 
+const maxDisplayLength = 12;
+
 //add event listeners
 numberButtons.forEach(button => button.addEventListener("click", addToDisplay));
+backButton.addEventListener("click", backspace);
 
 
 
 //this function takes a number button that has been pressed and adds it to the display
 function addToDisplay(e){
-    let currentText = display.textContent;
-    if(currentText.length < 12){
+    if(display.textContent.length < maxDisplayLength){
 
         let number = e.target.textContent;
         display.textContent += number;
+    }
+}
+
+//this function removes the last entered number
+function backspace(){
+    let currentText = display.textContent;
+    if(currentText.length > 0){
+        currentText = currentText.slice(0, currentText.length-1)
+        display.textContent = currentText;
     }
 }
