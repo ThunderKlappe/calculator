@@ -132,7 +132,7 @@ function equals(e){
         }
         //if it's a long deciaml, only fill the display
         else if(("" + operand1).length > MAX_DISPLAY_LENGTH){
-            display.textContent = (""+operand1.toPrecision(MAX_DISPLAY_LENGTH)).slice(0,MAX_DISPLAY_LENGTH);
+            display.textContent = (""+(Math.round(operand1*1000000000000)/1000000000000));
         }//if it's dividing by 0, give error
         else if(operand2 == 0 && operator == "divide"){
             display.textContent = "Can't do that!"   
