@@ -29,15 +29,17 @@ body{
     padding: 25px;
 }
 #calc-display{
-    height: 50px;
+    min-height: 50px;
     background-color: #F0D290;
     border-radius: 15px;
     font-size: 30px;
     color: #2C3531;
     display: flex;
     flex-direction: row-reverse;
+    flex-wrap: wrap;
     align-items: center;
     padding-right: 15px;
+    text-align: right;
 }
 #button-container{
     display: flex;
@@ -71,6 +73,10 @@ sup{
     color: #2C3531
 }
 .operator-button:active{
+    background-color: #2C3531;
+    color: #b35f80;
+}
+.active{
     background-color: #2C3531;
     color: #b35f80;
 }
